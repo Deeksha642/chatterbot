@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <title>Chatbot</title>
+  <head>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://www.clipartkey.com/mpngs/m/315-3158064_vector-chatbot-icon.png"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+      }
+      h1 {
+        background-color: #4682B4;
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        font-family:forte;
+        padding: 19px;
+        border-radius:15px 50px;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border-radius:20px;
+        border: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: black;
+        font-family: forte;
+        font-size: 20px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: #808080;
+        padding: 10px;
+        border-radius: 20px;
+      }
+      .botText {
+        color: black;
+        font-family: forte;
+        font-size: 20px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #800000;
+        padding: 10px;
+        border-radius: 20px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 48%;
+        margin-top: 60px;
+        border: 3px solid black;
+        border-radius:50px 20px;
+      }
+      .box {
+        border: 2px solid black;
+
+      }
+    </style>
+  </head>
+  <body>
+    <img />
+    <center>
+      <h1>
+        <img
+          src="https://www.clipartkey.com/mpngs/m/315-3158064_vector-chatbot-icon.png"
+          alt="CANDICE"
+          style="width:80px;height:80px;"
+        />Your Personal ChatBot
+      </h1>
+    </center>
+    <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/woman-raising-hand.png"
+            alt="CANDICE"
+            style="width:40px;height:40px;"
+          />
+          <p class="botText">
+            <span>Hi! I'm your personal ChatBot </span>
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Message" />
+        </div>
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>
